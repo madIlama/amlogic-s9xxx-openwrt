@@ -21,8 +21,8 @@ on:
     - cron: '0 17 * * *'
 
 env:
-  REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: openwrt-21.02
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
   FEEDS_CONF: router_config/feeds.conf.default
   CONFIG_FILE: router_config/.config
   DIY_P1_SH: router_config/diy-part1.sh
@@ -84,12 +84,12 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
-    #- name: Load custom configuration
-    #  run: |
-    #    [ -e files ] && mv files openwrt/files
-    #    [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-    #    chmod +x $DIY_P2_SH
-    #    cd openwrt
+    - name: Load custom configuration
+      run: |
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_P2_SH
+        cd openwrt
     #    $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: Download package
@@ -159,7 +159,7 @@ jobs:
         sudo rm -rf openwrt && sync
         sudo rm -rf /workdir && sync
         sudo chmod +x make
-        sudo ./make -d -b s905x3_s905x2_s905x_s905d_s922x_s912 -k 5.10.23.TF_5.4.105
+        sudo ./make -d -b s905x -k 5.4.105
         cd out/ && sudo gzip *.img
         cp -f ../openwrt-armvirt/*.tar.gz . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
