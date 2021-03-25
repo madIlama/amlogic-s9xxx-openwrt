@@ -39,7 +39,7 @@ env:
   KEEP_MININUM_RUNS: 0
   KEEP_MININUM_RELEASE: 3
   RECENT_LASTEST: 3
-  TZ: Asia/Shanghai
+  TZ: Asia/Jakarta
 
 jobs:
   build:
